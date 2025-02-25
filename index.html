@@ -1,0 +1,191 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>GeoViewer</title>
+    <link rel="icon" type="image/x-icon" href="images/favicon.png">
+    <link rel="stylesheet" href="styles.css">
+    <script type="module" src=https://js.arcgis.com/calcite-components/2.11.1/calcite.esm.js></script>
+    <link rel="stylesheet" type="text/css" href=https://js.arcgis.com/calcite-components/2.11.1/calcite.css />
+
+    <script src="https://js.arcgis.com/4.30/"></script>
+    <link disabled id="arcgis-maps-sdk-theme-dark" rel="stylesheet" href="https://js.arcgis.com/4.30/esri/themes/dark/main.css" />
+    <link id="arcgis-maps-sdk-theme-light" rel="stylesheet" href="https://js.arcgis.com/4.30/esri/themes/light/main.css" />
+
+    <script src="script.js"></script>
+    
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBi8hSJg5eE81YunEdajFMF2QPa_ceisAk&callback=initMap&v=weekly" defer></script>
+  </head>
+  <body>
+    <calcite-loader></calcite-loader>
+    <calcite-shell>
+
+      <calcite-navigation slot="header">
+        <calcite-navigation-logo slot="logo" heading="GeoViewer" description="sub-heading goes here" thumbnail="./images/logo.png"></calcite-navigation-logo>
+        <calcite-dropdown width="m" slot="user">
+          <calcite-navigation-user id="user" slot="trigger" full-name="-" username="-"></calcite-navigation-user>
+              <calcite-dropdown-item id="themeButton" icon-start="contrast">Dark mode</calcite-dropdown-item>
+              <calcite-dropdown-item id="signOut" icon-start="sign-out">Sign-out</calcite-dropdown-item>
+              <calcite-dropdown-item id="help" icon-start="email-address"><a href="mailto:gisrequests@auburnwa.gov?subject=GIS Help Needed">Help</a></calcite-dropdown-item>
+      </calcite-dropdown>
+
+      </calcite-navigation>
+      <calcite-shell-panel id="layersShellPanel" class="sideShells" slot="panel-start" resizable="true" detached="false" position="start" width-scale="m">
+        <calcite-panel id="layersPanel" heading="Layers" closable="false"  class="sidePanel">
+          <calcite-action icon="reset" text-enabled text="Reset" slot="header-menu-actions"></calcite-action>
+          <div id="sidePanel"></div>
+        </calcite-panel>
+        <calcite-action-bar slot="action-bar" expanded="true">
+          <calcite-action id="layersAction" active="true" text="Layers" icon="layers" class="sideActions"></calcite-action>
+          <calcite-action id="printAction" text="Print" icon="print" class="sideActions"></calcite-action>
+          <calcite-action id="basemapAction" text="Basemap" icon="basemap" class="sideActions"></calcite-action>
+          <calcite-action id="measureAction" text="Measure" icon="measure" class="sideActions"></calcite-action>
+          <calcite-action id="addlayerAction" text="Add Layer" icon="add-layer" class="sideActions"></calcite-action>
+          <calcite-action id="sketchAction" text="Sketch" icon="pencil-mark"></calcite-action>
+          <calcite-action id="searchAction" text="Search" icon="query" class="sideActions"></calcite-action>
+          <calcite-action id="legendAction" text="Legend" icon="legend" class="sideActions"></calcite-action>
+          <calcite-action-group slot="bottom-actions">
+            <calcite-action id="saveAction" text="Save" icon="save"></calcite-action>
+            <calcite-action id="webMapAction" text="Open" icon="folder-open" class="sideActions"></calcite-action>
+          </calcite-action-group>
+        </calcite-action-bar>
+      </calcite-shell-panel>
+
+      <calcite-shell-panel id="webMapShellPanel" class="sideShells" slot="panel-start" resizable="true" detached="false" position="start" width-scale="m" collapsed>
+        <calcite-panel id="webMapPanel" heading="Open Web Map" closable="false"  class="sidePanel">
+          <calcite-tabs>
+            <calcite-tab-nav slot="title-group">
+              <calcite-tab-title selected>Private</calcite-tab-title>
+              <calcite-tab-title>Org</calcite-tab-title>
+            </calcite-tab-nav>
+            <calcite-tab selected>
+              <calcite-list id="webMapGallaryPrivate" filter-enabled selection-mode="single"></calcite-list>
+            </calcite-tab>
+            <calcite-tab>
+              <calcite-list id="webMapGallaryOrg" filter-enabled selection-mode="single"></calcite-list>
+            </calcite-tab>
+          </calcite-tabs>
+        </calcite-panel>
+      </calcite-shell-panel>
+
+      <calcite-shell-panel id="printShellPanel" class="sideShells" slot="panel-start" resizable="true" detached="false" position="start" width-scale="m" collapsed>
+        <calcite-panel id="printPanel" heading="Print" closable="false" class="sidePanel">
+        </calcite-panel>
+      </calcite-shell-panel>
+
+      <calcite-shell-panel id="basemapShellPanel" class="sideShells" slot="panel-start" resizable="true" detached="false" position="start" width-scale="m" collapsed>
+        <calcite-panel id="basemapPanel" heading="Basemap" closable="false"  class="sidePanel">
+          <div id="basemapDiv"></div>
+        </calcite-panel>
+      </calcite-shell-panel>
+
+      <calcite-shell-panel id="legendShellPanel" class="sideShells" slot="panel-start" resizable="true" detached="false" position="start" width-scale="m" collapsed>
+        <calcite-panel id="legendPanel" heading="Legend" closable="false"  class="sidePanel">
+          <div id="legendDiv" class="sidePanel"></div>
+        </calcite-panel>
+      </calcite-shell-panel>
+
+      <calcite-shell-panel id="addlayerShellPanel" class="sideShells" slot="panel-start" resizable="true" detached="false" position="start" width-scale="m" collapsed>
+        <calcite-panel id="addlayerPanel" heading="Add Layer" closable="false"  class="sidePanel">
+          <calcite-tabs bordered layout="center">
+            <calcite-tab-nav slot="title-group">
+                <calcite-tab-title selected>From File</calcite-tab-title>
+                <calcite-tab-title>From URL</calcite-tab-title>
+            </calcite-tab-nav>
+            <calcite-tab selected>
+              <div id="mainWindow">
+                <div>
+                  <div style="padding-left:4px;">
+                    <p>Add a zipped shapefile to the map.</p>
+                    <p> Visit the <a target="_blank" href="https://doc.arcgis.com/en/arcgis-online/reference/shapefiles.htm">Shapefiles</a> help topic for information and limitations. </p>
+                    <form enctype="multipart/form-data" method="post" id="uploadForm">
+                      <div class="field">
+                        <label class="file-upload">
+                          <span>
+                            <strong>Add File</strong>
+                          </span>
+                          <input type="file" name="file" id="inFile" />
+                        </label>
+                      </div>
+                    </form>
+                    <span class="file-upload-status" style="opacity:1;" id="upload-status"></span>
+                    <div id="fileInfo"></div>
+                  </div>
+                </div>
+              </div>
+            </calcite-tab>
+
+            <calcite-tab>
+
+              <div id="addLayer" class="esri-widget">
+                <p>Add a Map service layer to the map.</p>
+                <p> Visit the <a target="_blank" href="https://enterprise.arcgis.com/en/server/latest/publish-services/linux/what-is-a-map-service.htm">what is a map service?</a> help topic for more information.</p>
+                <label> URL: <input id="url" type="text">
+                </label>
+                <button id="goButton" class="btn btn-small btn-clear">Add</button>
+              </div>
+            </calcite-tab>
+
+        </calcite-tabs>
+
+
+        </calcite-panel>
+      </calcite-shell-panel>
+    
+
+
+
+      <calcite-shell-panel id="measureShellPanel" class="sideShells" slot="panel-start" resizable="true" detached="false" position="start" width-scale="m" collapsed>
+        <calcite-panel id="measurePanel" heading="Measure" closable="false"  class="sidePanel">
+          <p style="padding-left: 3%; padding-right: 3%;">Some encouraging words on how to use the search widget.</p>
+          <calcite-action-bar expand-disabled expanded="false" layout="horizontal">
+            <calcite-action id="measureDistanceButton" text="Measure Distance"icon="measure-line"></calcite-action>
+            <calcite-action id="measureAreaButton" text="Measure Area" icon="measure-area"></calcite-action>
+            <calcite-action id="measureClearButton" text="Clear Measurement" icon="trash"></calcite-action>
+        </calcite-action-bar>
+
+
+
+        </calcite-panel>
+      </calcite-shell-panel>
+
+      <calcite-popover id="savePopover" reference-element="sketchAction">
+        <div id="sketchDiv"></div>
+      </calcite-popover>
+
+<!--       <calcite-shell-panel id="sketchShellPanel" class="sideShells" slot="panel-start" resizable="true" detached="false" position="start" width-scale="m" collapsed>
+        <calcite-panel id="sketchPanel" heading="Sketch" closable class="sidePanel">
+          <div id="sketchDiv" style="width:100%; float: left;"></div>
+        </calcite-panel>
+      </calcite-shell-panel> -->
+
+      <calcite-shell-panel id="searchShellPanel" class="sideShells" slot="panel-start" resizable="true" detached="false" position="start" width-scale="m" collapsed>
+        <calcite-panel id="searchPanel" heading="Search" closable="false"  class="sidePanel">
+          <p style="padding-left: 3%; padding-right: 3%;">Some encouraging words on how to use the search widget.</p>
+          <div id="searchDiv" style="width:100%"></div>
+        </calcite-panel>
+      </calcite-shell-panel>
+
+      <calcite-popover id="savePopover" reference-element="saveAction" auto-close>
+        <calcite-action-pad expanded expand-disabled>
+          <calcite-action id="saveActionPadAction" text="Save" icon="save" disabled></calcite-action>
+          <calcite-action id="saveAsActionPadAction" text="Save As" icon="save"></calcite-action>
+      </calcite-action-pad>
+      </calcite-popover>
+      
+          <calcite-alert id="saveAlert" auto-close kind="success">
+            <div slot="title">Saved Web Map </div>
+            </calcite-alert>
+
+      
+      <div slot="center-row" position="start" id="viewDiv"></div>
+      <div slot="center-row" id="pano"></div>
+
+      <div id="streetViewButton" class="esri-component esri-widget--button esri-widget" role="button" tabindex="0" title="Google Streetview">
+        <calcite-icon icon="360-view"></calcite-icon>
+      </div>
+
+      </div>
+    </calcite-shell>
+  </body>
+</html>

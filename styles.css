@@ -1,0 +1,91 @@
+html,
+body,
+#viewDiv {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+}
+body {
+  display: flex;
+}
+
+calcite-loader {
+  align-self: center;
+  justify-self: center;
+}
+
+#header-title {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+#info-content {
+  padding: 0.75rem;
+}
+
+calcite-rating {
+  margin-top: 0.25rem;
+}
+#pano {
+display:none;
+  height: 100%;
+  width: 100%;
+}
+#mainWindow {
+  padding: .5em;
+  background-color: #fff;
+}
+#sidebarDiv {
+  width: 240px;
+  padding: 10px;
+  height: 200px;
+}
+
+
+#overlayDiv {
+  z-index: 1;
+  position: absolute;
+  margin: auto auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 300px;
+  height: 240px;
+  padding: 10px;
+  background-color: white;
+  border: 1px solid grey;
+  visibility: hidden;
+}
+#addLayer.esri-widget {
+  padding :10px;
+}
+
+ /*Removes the title "Export" from Print widget */
+.esri-print__header-title {
+  display: none;
+
+}
+
+
+
+ /*turn layerlist eyes into checkboxs */
+ .esri-icon-non-visible::before {
+  content: "\e610"!important;
+  }
+  .esri-icon-visible::before {
+  content: "\e611"!important;
+  }
+
+  /*Remove boarder when selecting mapView */
+  .esri-view .esri-view-surface--touch-none:focus::after {
+    outline: none !important;
+  }
+
+  /*basemap thumbnails */
+  .esri-basemap-gallery__item-thumbnail {
+    height: auto;
+    width: 100px !important;
+    box-shadow: 0 0 0 1px;
+  }
