@@ -68,8 +68,6 @@ display:none;
 
 }
 
-
-
  /*turn layerlist eyes into checkboxs */
  .esri-icon-non-visible::before {
   content: "\e610"!important;
