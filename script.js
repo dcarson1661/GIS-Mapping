@@ -132,7 +132,7 @@ function initMap() {
         })
     }
   
-/*   //////////////////////////////////////////////////////////////////////////////////////////////////////
+   //////////////////////////////////////////////////////////////////////////////////////////////////////
 const portalUrl = "https://danec5.maps.arcgis.com"
             var expands = []
             //Allow Enterprise Logins
@@ -144,7 +144,7 @@ const portalUrl = "https://danec5.maps.arcgis.com"
     
             esriId.registerOAuthInfos([info]);
             esriId.getCredential(info.portalUrl + "/sharing");
-              //   */
+              //   
     
     
     
