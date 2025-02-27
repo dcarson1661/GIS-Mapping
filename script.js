@@ -137,7 +137,7 @@ const portalUrl = "https://danec5.maps.arcgis.com"
             var expands = []
             //Allow Enterprise Logins
             const info = new OAuthInfo({
-              appId: "bVfqRR0qKtNDi7XH",
+              appId: "NkxoSlP1vpd4tpbz",
                 portalUrl: portalUrl,
               popup: false
             });
