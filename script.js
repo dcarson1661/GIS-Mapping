@@ -171,7 +171,14 @@ function initMap() {
             view.when(function () {
 
         
+         //signout
+  const signOut = document.getElementById("signOut");
+  signOut.addEventListener("click", function() {
+      IdentityManager.destroyCredentials();
+      location.reload();
+  })
 
+    //
 
             var searchAssetsSources = []
             var searchLocationsSources = []
