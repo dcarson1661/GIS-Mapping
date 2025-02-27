@@ -133,7 +133,7 @@ function initMap() {
     }
   
    //////////////////////////////////////////////////////////////////////////////////////////////////////
-const portalUrl = "https://danec5.maps.arcgis.com"
+ const portalUrl = "https://danec5.maps.arcgis.com"
             var expands = []
             //Allow Enterprise Logins
             const info = new OAuthInfo({
@@ -144,7 +144,7 @@ const portalUrl = "https://danec5.maps.arcgis.com"
     
             esriId.registerOAuthInfos([info]);
             esriId.getCredential(info.portalUrl + "/sharing");
-              //   
+              //    
     
     
     
@@ -169,6 +169,10 @@ const portalUrl = "https://danec5.maps.arcgis.com"
 
          
             view.when(function () {
+
+        
+
+
             var searchAssetsSources = []
             var searchLocationsSources = []
             var allLayers = webmap.allLayers.items
@@ -483,7 +487,7 @@ var legend = new Legend({
     
 
       view.when(() => {
-              //coordinates
+      //coordinates
       //add coordinates to map
       var coordsWidget = document.createElement("div");
       coordsWidget.id = "coordsWidget";
@@ -892,8 +896,8 @@ var legend = new Legend({
       //intial point location (really doesn't matter where as it gets updated as soon as the streetview window is opened)
       var point = {
         type: "point",
-        longitude: -122.3250,
-        latitude: 47.3061
+        longitude: -122.20,
+        latitude: 47.29
       };
 
       var markerSymbol = {
