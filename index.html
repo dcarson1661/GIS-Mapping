@@ -1,9 +1,8 @@
-
 <html>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
-    <title>GeoViewer</title>
+    <title>GIS Mapping</title>
     <link rel="icon" type="image/x-icon" href="images/favicon.png">
     <link rel="stylesheet" href="styles.css">
     <script type="module" src=https://js.arcgis.com/calcite-components/2.11.1/calcite.esm.js></script>
@@ -22,12 +21,12 @@
     <calcite-shell>
 
       <calcite-navigation slot="header">
-        <calcite-navigation-logo slot="logo" heading="GeoViewer" description="sub-heading goes here" thumbnail="./images/logo.png"></calcite-navigation-logo>
+        <calcite-navigation-logo style="transform: scale(1.5); transform-origin: left center;" slot="logo" heading="Valley Regional Fire Authority" description="GIS Mapping" thumbnail="./images/logo.svg" href="https://www.vrfa.org/"></calcite-navigation-logo>
         <calcite-dropdown width="m" slot="user">
           <calcite-navigation-user id="user" slot="trigger" full-name="-" username="-"></calcite-navigation-user>
               <calcite-dropdown-item id="themeButton" icon-start="contrast">Dark mode</calcite-dropdown-item>
               <calcite-dropdown-item id="signOut" icon-start="sign-out">Sign-out</calcite-dropdown-item>
-              <calcite-dropdown-item id="help" icon-start="email-address"><a href="mailto:gisrequests@auburnwa.gov?subject=GIS Help Needed">Help</a></calcite-dropdown-item>
+              <calcite-dropdown-item id="help" icon-start="email-address"><a href="mailto:dcarson1661@gmail.com?subject=GIS Help Needed">Help</a></calcite-dropdown-item>
       </calcite-dropdown>
 
       </calcite-navigation>
@@ -41,13 +40,13 @@
           <calcite-action id="printAction" text="Print" icon="print" class="sideActions"></calcite-action>
           <calcite-action id="basemapAction" text="Basemap" icon="basemap" class="sideActions"></calcite-action>
           <calcite-action id="measureAction" text="Measure" icon="measure" class="sideActions"></calcite-action>
-          <calcite-action id="addlayerAction" text="Add Layer" icon="add-layer" class="sideActions"></calcite-action>
+          <calcite-action id="addlayerAction" text="Add Layer" icon="add-layer" class="sideActions" hidden></calcite-action>
           <calcite-action id="sketchAction" text="Sketch" icon="pencil-mark"></calcite-action>
-          <calcite-action id="searchAction" text="Search" icon="query" class="sideActions"></calcite-action>
+          <calcite-action id="searchAction" text="Search" icon="query" class="sideActions" hidden></calcite-action>
           <calcite-action id="legendAction" text="Legend" icon="legend" class="sideActions"></calcite-action>
           <calcite-action-group slot="bottom-actions">
-            <calcite-action id="saveAction" text="Save" icon="save"></calcite-action>
-            <calcite-action id="webMapAction" text="Open" icon="folder-open" class="sideActions"></calcite-action>
+            <calcite-action id="saveAction" text="Save" icon="save" hidden></calcite-action>
+            <calcite-action id="webMapAction" text="Open" icon="folder-open" class="sideActions" hidden></calcite-action>
           </calcite-action-group>
         </calcite-action-bar>
       </calcite-shell-panel>

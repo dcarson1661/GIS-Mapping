@@ -87,3 +87,12 @@ display:none;
     width: 100px !important;
     box-shadow: 0 0 0 1px;
   }
+
+  .esri-layer-list__item-content {
+    display: flex !important;
+    align-items: center !important; /* Vertically align content */
+  }
+
+  calcite-logo::part(root) {
+    pointer-events: none;
+  }
