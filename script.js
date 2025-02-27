@@ -174,7 +174,7 @@ function initMap() {
          //signout
   const signOut = document.getElementById("signOut");
   signOut.addEventListener("click", function() {
-      IdentityManager.destroyCredentials();
+      esriId.destroyCredentials();
       location.reload();
   })
 
